@@ -1,0 +1,11 @@
+{
+  "name": "hugo-new-york-times",
+  "version": "1.0.0",
+  "description": "NYT Explorer PWA",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
