@@ -1,3 +1,9 @@
+# Variables de Entorno y Secretos
+.env
+
+# Archivos auto-generados
+config.js
+
 # Archivos del sistema operativo
 .DS_Store
 Thumbs.db

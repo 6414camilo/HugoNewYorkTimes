@@ -1,4 +1,4 @@
-// build.js — Genera el archivo .env a partir de las variables de entorno de Vercel
+// build.js — Genera config.js con las variables de entorno de Vercel
 const fs = require('fs');
 
 const API_KEY = process.env.API_KEY || '';
@@ -8,7 +8,13 @@ if (!API_KEY) {
   console.warn('⚠️  WARNING: API_KEY no está definida en las variables de entorno.');
 }
 
-const envContent = `API_KEY=${API_KEY}\nAPI_SECRET=${API_SECRET}\n`;
+// Genera un archivo JS que expone las variables como globales
+const configContent = `// Auto-generado por build.js — NO EDITAR
+window.__ENV__ = {
+  API_KEY: "${API_KEY}",
+  API_SECRET: "${API_SECRET}"
+};
+`;
 
-fs.writeFileSync('.env', envContent);
-console.log('✅ .env generado correctamente.');
+fs.writeFileSync('config.js', configContent);
+console.log('✅ config.js generado correctamente.');

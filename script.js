@@ -6,22 +6,29 @@ const ITEMS_LIMIT = 12;
 
 // ═══ CARGA DE ENTORNO ═══
 /**
- * Carga y parsea el archivo .env local
+ * Carga las variables de entorno.
+ * En producción (Vercel): lee de window.__ENV__ (generado por build.js → config.js)
+ * En desarrollo local: fallback a fetch(".env")
  */
 async function loadEnv() {
+  // Opción 1: config.js ya cargó las variables globalmente
+  if (window.__ENV__ && window.__ENV__.API_KEY) {
+    API_KEY = window.__ENV__.API_KEY;
+    API_SECRET = window.__ENV__.API_SECRET || "";
+    console.log("Configuración cargada desde config.js");
+    return;
+  }
+
+  // Opción 2: Fallback para desarrollo local con archivo .env
   try {
     const response = await fetch(".env");
     if (!response.ok) throw new Error("No se encontró el archivo .env");
     const text = await response.text();
     
-    // Parseo básico de cada línea del archivo .env
     text.split('\n').forEach(line => {
-      // Ignorar líneas vacías o comentarios
       if (!line.trim() || line.trim().startsWith('#')) return;
-      
       const [key, ...values] = line.split('=');
       if (key && values.length > 0) {
-        // Unir el valor por si contiene signos '=' y remover comillas extras
         const value = values.join('=').trim().replace(/^['"]|['"]$/g, '');
         if (key.trim() === 'API_KEY') API_KEY = value;
         if (key.trim() === 'API_SECRET') API_SECRET = value;
