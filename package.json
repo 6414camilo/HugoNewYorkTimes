@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "NYT Explorer PWA",
   "scripts": {
-    "build": "node build.js"
+    "build": "node build.js && mkdir -p public && cp index.html styles.css script.js manifest.json service-worker.js config.js public/ && cp -R icons public/"
   },
   "keywords": [],
   "author": "",
